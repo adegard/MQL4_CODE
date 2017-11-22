@@ -1,0 +1,77 @@
+string symb1="GER30"; //used for calculation
+
+double Rmin=0.05; //perc. min. rewards (var price in %)
+int PeriodsLooback=200; //number of period lookback
+int shiftR=3; //shift of reward calculation
+
+//LOOKBACK arrays:
+
+//arrays feeding  of  indicators - dim1: period number
+double E1[100]; 
+double E2[100]; 
+double E3[100]; 
+//states arrays definition - dim1: period number
+double S1[100]; 
+double S2[100]; 
+double S3[100]; 
+//global state code arrays definition - dim1: period number
+double St[100]; 
+//arrays feeding  of  rewards - dim1: period number
+double Rt[100]; 
+//arrays feeding  of  Actions - dim1: period number
+double At[100]; 
+At[0]=0; //first time definition
+
+for(int i=0;i<PeriodsLooback;i++)
+{
+   E1[i]=iATR(symb1,0,5,i)/iATR(symb1,0,20,i);
+   E2[i]=iClose(symb1,0,i)/iMA(symb1,0,10,0,MODE_SMMA,PRICE_MEDIAN,i);
+   E3[i]=iADX(symb1,0,5,PRICE_MEDIAN,MODE_MAIN,i)/100;
+
+      // states definition for 3 levels 1-3 of "ABC" 
+   	if (E1[i]<0.33) {	S1[i]=100;}
+   	else if(E1[i]>0.33 && E1[i]<0.66) {	S1[i]=200;}
+   		else if(E1[i]>0.66){  S1[i]=300;}
+
+   	if (E2[i]<0.33) {S2[i]=10;}
+   	else if(E2[i]>0.33 && E2[i]<0.66) {S2[i]=20;}
+   		else if(E2[i]>0.66){S2[i]=30;}
+   		
+   	if (E3[i]<0.33) {S3[i]=1;}
+   	else 	if(E3[i]>0.33 && E3[i]<0.66) {S3[i]=2;}
+   		else if(E3[i]>0.66){ S3[i]=3;}
+   		
+//global state code calculation at t period
+St[i]=S1[i]+S2[i]+S3[i];
+//Attribute future Rewards for each States (shift prediction -2 period)###############
+// rewards Rti calculation for future prediction
+Rt[i]=(iClose(symb1,0,i)-iClose(symb1,0,i+shiftR))/iClose(symb1,0,i+shiftR);
+//feeding  actions based on States and FUTURE rewards###################
+// ie.: Action  at t=3 defined by Rewards at t=1 for 2 periods of shift
+   if (Rt[i] >Rmin/100) {At[i+shiftR]=1;} //TO BUY }
+   else if (Rt[i+shiftR] < -Rmin/100) {At[i+shiftR]=-1;} //TO SELL }
+   	else {	At[i+shiftR]=0 ;}
+     
+}     //END LOOKBACK
+
+//then actual Action definition : #################################
+//LOOKING BACK FOR SAME STATES OF ACTUAL ONE
+
+for(int x=1;x<PeriodsLooback;x++)
+  {
+      if (St[0]==St[x]) {
+      	At[0]=At[x]+At[0]; //cumulate 1 or -1 actions to find prob.
+       }
+  }
+
+
+//calculation of actual state
+
+if(At[0]>=1)
+  {
+   LongEntryCondition = true;
+  }
+if(At[0]<= -1)
+  {
+   ShortEntryCondition = true;
+  }
