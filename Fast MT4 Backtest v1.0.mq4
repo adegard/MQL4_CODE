@@ -130,7 +130,7 @@ int start()
             if (pos=="SELL_T")
                   {
                   if   (IMA_fast>IMA_slow && IMA_fast_prev<IMA_slow_prev) {  // <---INSERT HERE LOGIC TO CLOSE SELL ORDER AT MARKET
-                  Equityline[i]=Equityline[i+1]/((Close[i]-brokerSpread)/Close[i+1]);
+                  Equityline[i]=Equityline[i+1]/((Close[i]+brokerSpread)/Close[i+1]);
                   pos=""; 
                   dotSt[i] =  Equityline[i]; }
                   else
