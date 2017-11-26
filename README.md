@@ -1,6 +1,7 @@
 # MQL4_CODE
 MQL4 CODE
 
+https://github.com/adegard/MQL4_CODE/blob/master/Fast%20MT4%20Backtest%20v1.0.mq4
 Fast MT4 Backtest v1.0.mq4 provide a fast way to make backtesting in MT4:
 It is an Indicator. There is an example of simple strategy of MA cross over/under, but you can insert your own entry and exit rules in Editor...It permits to obtain a "fast" backtest changing timeframe, securities...
 
