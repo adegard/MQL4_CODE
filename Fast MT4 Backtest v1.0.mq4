@@ -77,8 +77,8 @@ int start()
 
    for (int i=counted_bars-1; i>=0; i--)
    {
-      dotUp[i] = EMPTY_VALUE;
-      dotDn[i] = EMPTY_VALUE;
+   //   dotUp[i] = EMPTY_VALUE;
+    //  dotDn[i] = EMPTY_VALUE;
       
       ////////////////////HERE PUT CODE OF INDICATORS CALCULATION ////////////////////////////
 
