@@ -46,7 +46,7 @@ int init()
    SetIndexLabel(1,"SELL_Trend");
    SetIndexLabel(2,"Equityline");
    SetIndexLabel(3,"STOP_Trend");
-   string shortName="Equity Backtest"+ ", Strategy: "+NameStrat +". ";
+   string shortName="Equity Backtest";
    IndicatorShortName(shortName);
 
    return(0);
