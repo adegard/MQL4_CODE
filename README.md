@@ -15,3 +15,7 @@ The articles, codes and content on this website only contain general information
 They are not personal or investment advice nor a solicitation to buy or sell any financial instrument. 
 Each investor must make their own judgement about the appropriateness of trading a financial instrument 
 to their own financial, fiscal and legal situation.
+
+---
+
+For an overview of all my other projects, see https://adegard.github.io/blog/
